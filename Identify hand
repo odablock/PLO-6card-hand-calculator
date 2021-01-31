@@ -1,0 +1,564 @@
+import random
+
+# Enter user cards
+def input_cards():
+    user_cards_number = []
+    user_cards_suit = []
+    community_cards_number = []
+    community_cards_suit = []
+    total_user_cards = 6
+    print("Enter h=Hearts\n c=Clubs\n d=Diamonds \n s=Spades")
+
+    user_card_number = input(int("Enter the numbers of your 6 cards with a space between each: "))
+    user_card_suit = input(int("Enter the suit of your 6 cards:  "))
+    user_card_number.split()
+    user_card_suit.split()
+
+    # Example
+    user_cards_number = [8, 12, 14, 4, 11, 9]
+    user_cards_suit = ['s', 's', 'd', 'h', 'c', 's']
+    lis = sort_cards(user_cards_number, user_cards_suit)
+    user_cards_number = lis[0]  # lis is an easy way to reference the card number and suit respectively of the user
+    user_cards_suit = lis[1]
+
+
+""""
+
+MAYBE AFTER FINISHING THE PROJECT THIS CAN BE AN APPENDIX TO ADD A RNG TO MY CODE
+	# Using RNG (random module) to generate random three card flop
+def flop(community_cards_number,community_cards_suit):
+
+	community_cards_number = []
+	for i in range(3):
+		community_cards_number.append(random.randrange(1, 14))
+
+	community_cards_suit = [0,0,0,0]
+	for i.random in community_cards_suit:
+		community_cards_suit[i]
+"""
+
+# Example
+community_cards_number = [5, 2, 3]
+community_cards_suit = ['c', 's', 'd']
+lis = sort_cards(community_cards_number, community_cards_suit)
+community_cards_number = lis[0]
+community_cards_suit = lis[1]
+best_hand = (best_possible_hand(community_cards_number, community_cards_suit))
+print(best_hand)
+print(my_best_hand(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit, best_hand))
+
+
+def get_card(card):
+    if card == "K" or card == "k":
+        return 13
+    elif card == "Q" or card == "q":
+        return 12
+    elif card == "J" or card == "j":
+        return 11
+    elif card == "A" or card == "a":
+        return 14
+    else:
+        return int(card)  # Notice that this covers all possible cards in a deck from Ace to King
+
+
+# Call with sorted numbers
+# community_cards_number,community_cards_suit=sort_cards(community_cards_number,community_cards_suit)
+def best_possible_hand(community_cards_number, community_cards_suit):
+    suit = [0, 0, 0, 0]  # [0,0,0,0] = heart, club, diamond, spade respectively
+    flush = False
+    straight = False
+    straight_possible = 0
+    pair = False
+    start = community_cards_number[0]
+    i = 0
+    print(community_cards_number)
+    while (i < len(community_cards_suit)):
+        if community_cards_suit[i] == 'h':
+            suit[0] += 1
+        elif community_cards_suit[i] == 'c':
+            suit[1] += 1
+        elif community_cards_suit[i] == 'd':
+            suit[2] += 1
+        else:
+            suit[3] += 1
+
+        # check for STRAIGHT:
+        if i != 0:
+            if community_cards_number[
+                i] - start <= 5:  # taking the difference of any two of flopped cards and seeing if difference is less than 5-> which means possible straight
+                straight_possible += 1
+
+        # check for A,2,3,4,5
+        i += 1
+    if 14 in community_cards_number and start < 5:  # checking if 14 (ACE) is in community_cards_number, and if first card is less than 5
+        gap = community_cards_number[1] - start
+        if gap <= 3 and gap > 0:
+            straight = True
+    if straight_possible == 2:
+        straight = True
+    for i in suit:
+        if i > 3:
+            flush = True
+            break
+    if straight and flush and start >= 10:
+        return 9
+    elif straight and flush and start < 10:
+        return 8
+    elif community_cards_number[0] == community_cards_number[1] or community_cards_number[1] == community_cards_number[
+        2]:
+        return 7
+    elif flush:
+        return 5
+    elif straight:
+        return 4
+    else:
+        return 3
+
+
+def check_rf_sf_possible(community_cards_suit, community_cards_number):
+    i = 0
+    start = community_cards_number[0]
+    straight_possible = 0
+    while (i < len(community_cards_number)):
+        if
+
+        i += 1
+
+
+def my_best_hand(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit, best_hand):
+    i = 0
+    my_hand = 0
+    bh = False
+    l = len(user_cards_number)
+    hand = is_my_hand_best_hand(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit,
+                                best_hand)
+    print(hand)
+    return hand
+    '''
+    while(i<l):
+        j=i+1
+        while(j<l):
+            hand = get_hand(community_cards_number,community_cards_suit,[user_cards_number[i],user_cards_number[j]],[user_cards_suit[i],user_cards_suit[j]],best_hand)
+            if(hand>my_hand):
+                my_hand=hand
+            if my_hand = best_hand:
+                bh=True			
+                j+=1
+        i+=1
+    if not bh:
+        calculate_odds(community_cards_number,community_cards_suit,user_cards_number,user_cards_suit,best_hand)
+'''
+
+
+
+
+def odds_royal_flush(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    rf =
+
+
+
+
+def check_royal_flush(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    if len(community_cards_number) == 3:
+        comm = set(community_cards_suit)
+        if (len(comm) != 1):
+            return 0
+        start = 10
+        comm = 0
+        user = 0
+        i = 0
+        suit = community_cards_suit[0]
+        print(suit)
+        while (i < 5):
+            if (start + i) in community_cards_number:
+                comm += 1
+            elif (start + i) in user_cards_number:
+                user += 1
+                coun_occurence = user_cards_number.count(start + i)
+                straight_possible = False
+                temp = 0
+                for k in range(coun_occurence):
+                    index = user_cards_number.index((start + i), temp)
+                    temp = index + 1
+                    if suit == user_cards_suit[index]:
+                        straight_possible = True
+                        break
+                if not straight_possible:
+                    return 0
+            else:
+                return 0
+            i += 1
+        if comm == 3 and user == 2:
+            if start > 10:
+                return 14
+            return start + 4
+        return 0
+    else:
+        straight = 0
+        for j in range(3):
+            temp_list_number = community_cards_number
+            temp_list_number.pop(i)
+            temp_list_suit = community_cards_suit
+            temp_list_suit.pop(i)
+            comm = set(temp_list_suit)
+            if (len(comm) != 1):
+                continue
+            suit = temp_list_suit[0]
+            start = 10
+            comm = 0
+            user = 0
+            i = 0
+            while (i < 5):
+                if (start + i) in temp_list_number:
+                    comm += 1
+                elif (start + i) in user_cards_number:
+                    user += 1
+                    coun_occurence = user_cards_number.count(start + i)
+                    straight_possible = False
+                    temp = 0
+                    for k in range(coun_occurence):
+                        index = user_cards_number.index((start + i), temp)
+                        temp = index + 1
+                        if suit == user_cards_suit[index]:
+                            straight_possible = True
+                            break
+                    if not straight_possible:
+                        return 0
+                else:
+                    break
+                i += 1
+            if comm == 3 and user == 2:
+                return 14
+        return 0
+
+
+def check_straight_flush(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    if len(community_cards_number) == 3:
+        straight = 0
+        comm = set(community_cards_suit)
+        if (len(comm) != 1):
+            return 0
+        start = community_cards_number[0]
+        if start < 5:
+            if 14 in community_cards_number:
+                index = community_cards_number.index(14)
+                community_cards_number[index] = 1
+                start = 1
+            if 14 in user_cards_number:
+                index = user_cards_number.index(14)
+                user_cards_number[index] = 1
+                start = 1
+        lower = 4 - (community_cards_number[2] - start)
+        comm = 0
+        user = 0
+        i = 0
+        suit = community_cards_suit[0]
+        print(suit)
+        while (i < 5):
+            if (start + i) in community_cards_number:
+                comm += 1
+            elif (start + i) in user_cards_number:
+                user += 1
+                coun_occurence = user_cards_number.count(start + i)
+                straight_possible = False
+                temp = 0
+                for k in range(coun_occurence):
+                    index = user_cards_number.index((start + i), temp)
+                    temp = index + 1
+                    if suit == user_cards_suit[index]:
+                        straight_possible = True
+                        break
+                if not straight_possible:
+                    break
+            else:
+                break
+            i += 1
+        if comm == 3 and user == 2:
+            if start > 10:
+                return 14
+            return start + 4
+        if start - lower >= 1 and lower > 0:
+            start -= lower
+            comm = 1
+            user = 0
+            i = 0
+            if start > 10:
+                start = 10
+            while (i < 5):
+                if (start + i) in community_cards_number:
+                    comm += 1
+                elif (start + i) in user_cards_number:
+                    user += 1
+                else:
+                    pass
+                i += 1
+            if comm == 3 and user == 2:
+                if straight < start + 4:
+                    straight = start + 4
+        if straight > 14:
+            straight = 14
+        return straight
+    else:
+        straight = 0
+        for j in range(3):
+            temp_list_number = community_cards_number
+            temp_list_number.pop(i)
+            temp_list_suit = community_cards_suit
+            temp_list_suit.pop(i)
+            comm = set(temp_list_suit)
+            if (len(comm) != 1):
+                continue
+            suit = temp_list_suit[0]
+            start = community_cards_number[0]
+            if start < 5:
+                if 14 in temp_list_number:
+                    index = temp_list_number.index(14)
+                    temp_list_number[index] = 1
+                    start = 1
+                if 14 in user_cards_number:
+                    index = user_cards_number.index(14)
+                    user_cards_number[index] = 1
+                    start = 1
+            lower = 4 - (community_cards_number[2] - start)
+            comm = 0
+            user = 0
+            i = 0
+            while (i < 5):
+                if (start + i) in temp_list_number:
+                    comm += 1
+                elif (start + i) in user_cards_number:
+                    user += 1
+                    coun_occurence = user_cards_number.count(start + i)
+                    straight_possible = False
+                    temp = 0
+                    for k in range(coun_occurence):
+                        index = user_cards_number.index((start + i), temp)
+                        temp = index + 1
+                        if suit == user_cards_suit[index]:
+                            straight_possible = True
+                            break
+                    if not straight_possible:
+                        return 0
+                else:
+                    break
+                i += 1
+            if comm == 3 and user == 2:
+                if straight < start + 4:
+                    straight = start + 4
+        if straight > 14:
+            straight = 14
+        return straight
+
+
+def check_four_of_a_kind(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    combined_list = sort_cards(community_cards_number.extend(user_cards_number),
+                               community_cards_suit.extend(user_cards_suit))
+    count = 0
+    num = 0
+    for i in combined_list[0]:
+        if num == i:
+            count += 1
+        else:
+            count = 0
+            num = i
+        if count == 4:
+            if community_cards_number.count(num) == 2 and user_cards_number.count(num) == 2:
+                return num
+    return 0
+
+
+def check_three_of_a_kind(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    combined_list = sort_cards(community_cards_number + user_cards_number, community_cards_suit + user_cards_suit)
+    print(combined_list)
+    count = 0
+    num = 0
+    for i in combined_list[0]:
+        if num == i:
+            count += 1
+            print(count)
+        else:
+            count = 1
+            num = i
+        if count == 3:
+            if (community_cards_number.count(num) == 1 and user_cards_number.count(num) == 2) or (
+                    community_cards_number.count(num) == 2 and user_cards_number.count(num) == 1):
+                return num
+    return 0
+
+
+def check_full_house(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    combined_list = sort_cards(community_cards_number.extend(user_cards_number),
+                               community_cards_suit.extend(user_cards_suit))
+    trip_num = 0
+    p_num = 0
+    num = 0
+    count = 0
+    for i in combined_list[0]:
+        if num == i:
+            count += 1
+        else:
+            count = 0
+            num = i
+        if count == 2:
+            p_num = num
+        if count == 3:
+            trip_num = num
+            if p_num == num:
+                p_num = 0
+    if p_num != 0 and trip_num != 0:
+        if (community_cards_number.count(p_num) + community_cards_number.count(trip_num) == 3) and (
+                user_cards_number.count(trip_num) + user_cards_number.count(p_num) == 2):
+            return trip_num
+    return 0
+
+
+def check_flush(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    suit = [0, 0, 0, 0]
+    while (i < len(community_cards_suit)):
+        if community_cards_suit[i] == 'h':
+            suit[0] += 1
+        elif community_cards_suit[i] == 'c':
+            suit[1] += 1
+        elif community_cards_suit[i] == 'd':
+            suit[2] += 1
+        else:
+            suit[3] += 1
+    for i in suit:
+        if i >= 3:
+            if user_cards_suit.count(i) >= 2:
+                return 1
+    return 0
+
+
+# To be done: Handle A,2,3,4,5
+def check_straight(community_cards_number, community_cards_suit, user_cards_number, user_cards_suit):
+    if len(community_cards_number) == 3:
+        straight = 0
+        start = community_cards_number[0]
+        if start < 5:
+            if 14 in community_cards_number:
+                index = community_cards_number.index(14)
+                community_cards_number[index] = 1
+                start = 1
+            if 14 in user_cards_number:
+                index = user_cards_number.index(14)
+                user_cards_number[index] = 1
+                start = 1
+        lower = 4 - (community_cards_number[2] - start)
+        if start > 10:
+            start = 10
+        comm = 0
+        user = 0
+        i = 0
+        while (i < 5):
+            if (start + i) in community_cards_number:
+                comm += 1
+            elif (start + i) in user_cards_number:
+                user += 1
+            else:
+                break
+            i += 1
+        if comm == 3 and user == 2:
+            if start > 10:
+                return 14
+            return start + 4
+
+        if start - lower >= 1 and lower > 0:
+            start -= lower
+            comm = 1
+            user = 0
+            i = 0
+            if start > 10:
+                start = 10
+            while (i < 5):
+                if (start + i) in community_cards_number:
+                    comm += 1
+                elif (start + i) in user_cards_number:
+                    user += 1
+                else:
+                    break
+                i += 1
+            if comm == 3 and user == 2:
+                if straight < start + 4
+                    straight = start + 4
+        if straight > 14:
+            straight = 14
+        return straight
+    else:
+        j = 0
+        straight = 0
+        while (j < 3):
+            temp_list_number = community_cards_number
+            temp_list_number.pop(i)
+            temp_list_suit = community_cards_suit
+            temp_list_suit.pop(i)
+            start = temp_list_number[0]
+            if start < 5:
+                if 14 in temp_list_number:
+                    index = temp_list_number.index(14)
+                    temp_list_number[index] = 1
+                    start = 1
+                if 14 in user_cards_number:
+                    index = user_cards_number.index(14)
+                    user_cards_number[index] = 1
+                    start = 1
+            if start > 10:
+                start = 10
+            lower = 4 - (community_cards_number[2] - start)
+            comm = 1
+            user = 0
+            i = 1
+            while (i < 5):
+                if (start + i) in temp_list_number:
+                    comm += 1
+                elif (start + i) in user_cards_number:
+                    user += 1
+                else:
+                    break
+                i += 1
+            if comm == 3 and user == 2:
+                if straight < start + 4:
+                    straight = start + 4
+            if start - lower > 1 and lower > 0:
+                start -= lower
+                if start > 10:
+                    start = 10
+                comm = 1
+                user = 0
+                i = 0
+                while (i < 5):
+                    if (start + i) in community_cards_number:
+                        comm += 1
+                    elif (start + i) in user_cards_number:
+                        user += 1
+                    else:
+                        break
+                    i += 1
+                if comm == 3 and user == 2:
+                    if straight < start + 4:
+                        straight = start + 4
+            j += 1
+        if straight > 14:
+            return 14
+        return straight
+
+
+def sort_cards(community_cards_number, community_cards_suit):
+    i = 0
+    l = len(community_cards_number)
+    while (i < l):
+        j = i + 1
+        while (j < l):
+            if (community_cards_number[j] < community_cards_number[i]):
+                temp = community_cards_number[i]
+                community_cards_number[i] = community_cards_number[j]
+                community_cards_number[j] = temp
+                temp = community_cards_suit[i]
+                community_cards_suit[i] = community_cards_suit[j]
+                community_cards_suit[j] = temp
+            j += 1
+        i += 1
+    return community_cards_number, community_cards_suit
+
+
+
