@@ -1,5 +1,3 @@
-import random
-
 # Enter user cards
 def input_cards():
     user_cards_number = []
@@ -20,22 +18,6 @@ def input_cards():
     lis = sort_cards(user_cards_number, user_cards_suit)
     user_cards_number = lis[0]  # lis is an easy way to reference the card number and suit respectively of the user
     user_cards_suit = lis[1]
-
-
-""""
-
-MAYBE AFTER FINISHING THE PROJECT THIS CAN BE AN APPENDIX TO ADD A RNG TO MY CODE
-	# Using RNG (random module) to generate random three card flop
-def flop(community_cards_number,community_cards_suit):
-
-	community_cards_number = []
-	for i in range(3):
-		community_cards_number.append(random.randrange(1, 14))
-
-	community_cards_suit = [0,0,0,0]
-	for i.random in community_cards_suit:
-		community_cards_suit[i]
-"""
 
 # Example
 community_cards_number = [5, 2, 3]
